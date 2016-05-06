@@ -1,9 +1,11 @@
-var request = require('request');
+var fs      = require('fs');
 var cheerio = require('cheerio');
-var fs = require('fs');
+var request = require('request');
+var uuid    = require('node-uuid');
+
 var urls = [];
 
-request('http://www.reddit.com/r/food', function(err, res) {
+request('http://www.reddit.com/r/corgi', function(err, res) {
   if (!err && res.statusCode == 200) {
     var $ = cheerio.load(res.body);
     $('a.title', '#siteTable').each(function() {
@@ -42,7 +44,6 @@ request('http://www.reddit.com/r/food', function(err, res) {
         //       $('div img', '#inside').each(function() {
 
         //         var url = 'http:' + this.attribs.href;
-        //         console.log(url);
         //         urls.push(url);
         //       });
         //     }
@@ -59,7 +60,7 @@ request('http://www.reddit.com/r/food', function(err, res) {
 
     console.log(urls.length + ' corgis found!');
     for (var i = 0; i < urls.length; i++) {
-      request(urls[i]).pipe(fs.createWriteStream('img/' + i + '.jpg'));
+      request(urls[i]).pipe(fs.createWriteStream('img/' + uuid.v4() + '.jpg'));
     }
   }
 });
