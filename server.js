@@ -15,7 +15,7 @@ request('http://www.reddit.com/r/corgi', function(err, res) {
       if (url.indexOf('imgur.com') !== -1) {
 
         // no .gifv support
-        if (url.indexOf('.gifv') !== -1 || url.indexOf('gallery') !== -1) {
+        if (url.indexOf('.gifv') !== -1) {
           return;
         }
 
@@ -33,8 +33,8 @@ request('http://www.reddit.com/r/corgi', function(err, res) {
           return;
         }
 
-        // // and the gallery..
-        // if (url.indexOf('gallery') !== -1) {
+        // and the gallery..
+        if (url.indexOf('gallery') !== -1) {
         //   request(url, function(err, res) {
         //     if (!err && res.statusCode == 200) {
         //       var $ = cheerio.load(res.body);
@@ -48,7 +48,8 @@ request('http://www.reddit.com/r/corgi', function(err, res) {
         //       });
         //     }
         //   });
-        // }
+          return;
+        }
 
         // if not .jpg yet, make it so
         if (url.indexOf('.jpg') === -1) {
